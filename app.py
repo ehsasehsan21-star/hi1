@@ -1,12 +1,39 @@
 from __future__ import annotations
 
 import hashlib
+import subprocess
+import sys
 from datetime import datetime
 
-import numpy as np
-import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
+# Auto-install missing packages
+def install(package):
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', package, '-q'])
+
+try:
+    import numpy as np
+except ImportError:
+    install('numpy')
+    import numpy as np
+
+try:
+    import pandas as pd
+except ImportError:
+    install('pandas')
+    import pandas as pd
+
+try:
+    import plotly.express as px
+    import plotly.graph_objects as go
+except ImportError:
+    install('plotly')
+    import plotly.express as px
+    import plotly.graph_objects as go
+
+try:
+    import openpyxl
+except ImportError:
+    install('openpyxl')
+
 import streamlit as st
 
 st.set_page_config(
@@ -1665,3 +1692,4 @@ st.markdown(
     '<div style="text-align:center;color:#6e7681;font-size:.75rem;padding:24px 0 8px;">SupplierDash · Interactive KPI Monitoring · Powered by Streamlit</div>',
     unsafe_allow_html=True,
 )
+
